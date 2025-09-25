@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./backend
+    container_name: cs390-agent-backend
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "6003:6000" # Expose port 6000 of the container to port 6003 on the host
+    healthcheck:
+      # Note, this check is internal to the "network" Docker creates when composing
+      # these containers together, so it should always refer to localhost
+      # Requires curl installed in backend image
+      test: ["CMD", "curl", "-sf", "http://localhost:6000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  frontend:
+    build: ./frontend
+    container_name: cs390-agent-frontend
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "6083:80"
