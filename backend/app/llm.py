@@ -8,7 +8,6 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message
 
 MODEL_ID = os.getenv("MODEL_ID")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-LLM_API_URL = os.getenv("LLM_API_URL")
 
 if not OPENAI_API_KEY:
     raise ValueError("Missing OPENAI_API_KEY in environment variables")
@@ -20,6 +19,8 @@ logging.info("OpenAI client initialized successfully")
 def get_llm_response(req: str, system_msg: str = "") -> str:
     """
     Chat using LLM proxy. Uses the Responses API.
+    req: user Input string
+    system_msg: system prompt for the LLM
     """
 
     try:
@@ -28,7 +29,7 @@ def get_llm_response(req: str, system_msg: str = "") -> str:
         resp = client.responses.create(
             model=MODEL_ID,
             instructions=system_msg,
-            input=req,
+            input=[{"role": "user", "content": req}],
             temperature=0.7,
         )
         response = resp.output[0].content[0].text

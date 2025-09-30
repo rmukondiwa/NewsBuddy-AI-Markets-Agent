@@ -46,6 +46,6 @@ def chat(request: ChatRequest):
         reply = f"Error: {content}"
     else:
         agent = decision["agent"]
-        reply = agent.handle_request(decision["answer"])
+        reply = agent.handle_request(decision["answer"], content)
 
     return {"reply": reply}
