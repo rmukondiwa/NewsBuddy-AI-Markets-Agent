@@ -19,7 +19,7 @@ class GatewayAgent:
             # TODO: implement weather agent in class with data from
             #       https://api.weather.gov
             # TODO: implement your own agent(s)
-            "Markets" : MarketsAgent(),
+            "MARKETS" : MarketsAgent(),
         }
         self.system_msg = """
             You are an intelligent assistant that decides between several options
@@ -32,6 +32,7 @@ class GatewayAgent:
 
 
     def get_agent(self, user_input: str) -> dict:
+        """Given some user_input, decide which agent to use"""
         response = get_llm_response(user_input, system_msg=self.system_msg)
 
         try:
