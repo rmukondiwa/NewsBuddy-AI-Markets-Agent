@@ -1,7 +1,10 @@
+
 // ---------- UI helpers ----------
 function $(id){
    return document.getElementById(id);
 }
+
+const CHAT_API_URL = 'http://localhost:6003';
 
 // shows "busy" state on a button/status, returns reset function
 function setBusy(btnId, statusId, busyText="Working..."){
