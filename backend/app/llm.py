@@ -1,28 +1,39 @@
 import os
+import logging
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s") # Set logging level to INFO so that we can see the logs
 
 MODEL_ID = os.getenv("MODEL_ID")
-LLM_TOKEN = os.getenv("LLM_TOKEN")
-#LLM_API_URL = os.getenv("LLM_API_URL")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+LLM_API_URL = os.getenv("LLM_API_URL")
+
+if not OPENAI_API_KEY:
+    raise ValueError("Missing OPENAI_API_KEY in environment variables")
 
 # Initialize OpenAI client with appropriate credentials
-client = OpenAI(
-    api_key=LLM_TOKEN,
-)
+client = OpenAI(api_key=OPENAI_API_KEY)
+logging.info("OpenAI client initialized successfully")
 
 def get_llm_response(req: str, system_msg: str = "") -> str:
     """
     Chat using LLM proxy. Uses the Responses API.
     """
-    resp = client.responses.create(
-        model=MODEL_ID,
-        instructions=system_msg,
-        input=req,
-        temperature=0.7,
-    )
 
     try:
-        return resp.output[0].content[0].text
+        logging.info(f"Sending request to model {MODEL_ID} with system message: {system_msg}")
+
+        resp = client.responses.create(
+            model=MODEL_ID,
+            instructions=system_msg,
+            input=req,
+            temperature=0.7,
+        )
+        response = resp.output[0].content[0].text
+        logging.info(" Received response from OPENAI rahh")
+        return response
     except Exception as e:
+        logging.error(f" X Error extracting response: {e}")
         return f"Error extracting reply: {e}"
