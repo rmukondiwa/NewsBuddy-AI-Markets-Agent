@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS390 Web Scraping AI Agent Demo</title>
+  <style>
+    :root{
+      --bg:#0b0c10; --text:#0f172a; --muted:#64748b; --card:#ffffff; --border:#e5e7eb;
+      --ring:#6366f1; --chip-bg:#eef2ff; --chip-txt:#3730a3; --btn:#0f172a; --btn-bg:#f1f5f9;
+      --btn-bg-hover:#e2e8f0; --success:#16a34a; --error:#ef4444;
+    }
+    *{ box-sizing: border-box }
+    html,body{ margin:0; padding:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial }
+    body{ color:var(--text); background:#fafafa }
+    .container{ max-width:1100px; margin:0 auto; padding:28px 20px 56px }
+
+    /* Header */
+    .hero{
+      background:linear-gradient(180deg, #0b0c10 0%, #12131a 100%);
+      color:#fff; border-radius:18px; padding:28px 22px; margin-bottom:22px;
+      box-shadow: 0 6px 22px rgba(2,6,23,.25);
+    }
+    .hero h1{ margin:0 0 6px; font-size: clamp(24px, 4vw, 40px); line-height:1.05 }
+    .chip{ display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; background:#1f2030; border:1px solid #2f3044 }
+    .sub{ margin-top:10px; color:#cbd5e1 }
+
+    /* Card */
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px;
+      box-shadow: 0 8px 24px rgba(2,6,23,.05);
+      display:flex; flex-direction:column; gap:10px; min-height:170px;
+    }
+    .card h3{ margin:0 0 4px; font-size:18px }
+    .hint{ margin:0; color:var(--muted); font-size:14px }
+
+    /* Controls */
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+    input[type="text"]{
+      padding:10px 12px; border:1px solid var(--border); border-radius:12px; min-width:200px;
+      outline: none;
+    }
+    input[type="text"]:focus{ border-color:var(--ring); box-shadow: 0 0 0 3px rgba(99,102,241,.15) }
+    button{
+      padding:10px 12px; border:1px solid #cbd5e1; border-radius:12px; background:var(--btn-bg);
+      cursor:pointer; transition: .15s ease background, .05s ease transform;
+    }
+    button:hover{ background:var(--btn-bg-hover) }
+    button:active{ transform: translateY(1px) }
+    .btn-primary{ background:#111827; color:#fff; border-color:#111827 }
+    .btn-primary:hover{ background:#0b1220 }
+
+    .toolbar{ display:flex; gap:8px; margin-top:-6px }
+    .status{ font-size:12px; color:var(--muted) }
+
+    /* JSON output box */
+    pre.out{
+      margin:0; background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size:12.6px; line-height:1.4; white-space: pre-wrap; word-break: break-word; overflow-wrap:anywhere;
+      max-height:230px; overflow:auto;
+    }
+
+    /* Chat bubbles */
+    .chat{ display:flex; flex-direction:column; gap:10px; margin-top:2px }
+    .bubble{
+      max-width: 90%; padding:10px 12px; border-radius:14px; border:1px solid var(--border); background:#fff;
+      box-shadow: 0 4px 14px rgba(2,6,23,.05); white-space: pre-wrap; word-break: break-word; font-size:14px;
+    }
+    .me{ align-self:flex-end; background:#eef2ff; border-color:#e0e7ff }
+    .ai{ align-self:flex-start; background:#ffffff }
+    .time{ display:block; margin-top:4px; color:var(--muted); font-size:11px }
+
+    .sep{ height:1px; background:var(--border); margin:20px 0 }
+
+    @media (max-width: 420px){
+      .hero{ padding:22px 16px }
+      .card{ padding:14px }
+      input[type="text"]{ min-width: 140px }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>CS390 Web Scraping AI Agent Demo</h1>
+      <div class="chip">FastAPI • Nginx • DukeGPT AI Agent</div>
+      <p class="sub">Open the browser console for network logs. This page calls the backend API running in a separate container.</p>
+    </section>
+
+    <!-- Chat bot only -->
+    <section class="card" id="chatCard" style="max-width: 940px;">
+      <div class="toolbar">
+        <span class="status" id="chatStatus">Ready</span>
+      </div>
+      <h3>Classroom Web Scraping AI Agent</h3>
+      <p class="hint">Talk to a DukeGPT-powered AI agent via the backend. The backend keeps the API key safe.</p>
+
+      <div id="chatLog" class="chat" aria-live="polite"></div>
+
+      <div class="row">
+        <input id="chatInput" type="text" placeholder="Ask me to summarize a web page" onkeypress="submit(event)" style="flex:1; min-width:240px;" />
+        <button class="btn-primary" id="btnChat" onclick="sendChat()">Send</button>
+        <button onclick="clearChat()">Clear</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

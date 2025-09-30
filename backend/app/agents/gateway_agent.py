@@ -2,6 +2,7 @@ import json
 from ..llm import get_llm_response
 from .chat_agent import ChatAgent
 from .scraping_agent import ScrapingAgent
+from .markets_agent import MarketsAgent
 
 
 """
@@ -18,6 +19,7 @@ class GatewayAgent:
             # TODO: implement weather agent in class with data from
             #       https://api.weather.gov
             # TODO: implement your own agent(s)
+            "Markets" : MarketsAgent(),
         }
         self.system_msg = """
             You are an intelligent assistant that decides between several options
