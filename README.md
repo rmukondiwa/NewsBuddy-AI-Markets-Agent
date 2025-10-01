@@ -12,7 +12,7 @@ Raphael Mukondiwa
 
  * Start Date: September 25, 2025
 
- * Finish Date: 
+ * Finish Date: October 1, 2025
 
  * Hours Spent: ~15 hours
 
@@ -53,13 +53,13 @@ Raphael Mukondiwa
         - Enter pytest -v tests/ in terminal
 
  * Information about using the program (like data files needed, inputs, etc.):
- - The program utilizes the Yahoo Finance API to get stock market information. No additional data files are needed. (yfinance)
- - For lint testing, you will need to have flake8 installed. You can install it using pip:
-    - pip install flake8
-    - flake8 frontned/ backend/
- - For security checks, you will need to have bandit installed. You can install it using pip:
-    - pip install bandit
-    - bandit -r frontend/ backend/
+    - The program utilizes the Yahoo Finance API to get stock market information. No additional data files are needed. (yfinance)
+    - For lint testing, you will need to have flake8 installed. You can install it using pip:
+        - pip install flake8
+        - flake8 frontned/ backend/
+    - For security checks, you will need to have bandit installed. You can install it using pip:
+        - pip install bandit
+        - bandit -r frontend/ backend/
 
  * Interesting data files:
 
@@ -68,21 +68,22 @@ Raphael Mukondiwa
 ### Notes
 
  * Features implemented:
- - A Markets AI Agent
- - Backend logs
- - Tests for the Markets Agent
- - Added Constants file for backend urls
+    - A Markets AI Agent
+    - Backend logs
+    - Tests for the Markets Agent
+    - Added Constants file for backend urls
 
  * Features unimplemented:
 
  * Noteworthy Features:
 
  * Known Bugs:
- - Sometimes the agent won't respond with a stock price, but will instead respond with a general market overview. This is likely due to a rate limiting issue with the Yahoo Finance API. I tried to mitigate this by adding system instructions to the agent, but it is not foolproof. The only solution is to try again after some time has passed.
- - For some reason the GPT doesn't do well with a follow up questions related to the original question. For example, if the user asks "What is the stock price of AAPL?" and then follows up with "Why is it so high", the agent will not be able to answer the follow up question. This is likely due to the fact that the agent is not able to retain context from previous interactions. A possible solution would be to implement a memory system for the agent, but this is beyond the scope of this project right now.
+    - Sometimes the agent won't respond with a stock price, but will instead respond with a general market overview. This is likely due to a rate limiting issue with the Yahoo Finance API. I tried to mitigate this by adding system instructions to the agent, but it is not foolproof. The only solution is to try again after some time has passed.
+    - For some reason the GPT doesn't do well with a follow up questions related to the original question. For example, if the user asks "What is the stock price of AAPL?" and then follows up with "Why is it so high", the agent will not be able to answer the follow up question. This is likely due to the fact that the agent is not able to retain context from previous interactions. A possible solution would be to implement a memory system for the agent, but this is beyond the scope of this project right now.
 
  * Decisions, assumptions, or responses to user feedback:
-
+    - For the purposes to deliver Phase1 on time, I decided to keep using yFinance library. Also slightly due to the amount of time I put into understanding it (sunk cost fallacy). 
+    - My goal for Phase2 is to explore other api tools like Polygon and Alpaca for the next phase, which are more scalable and won't have rate limiting issues.
 
 ### Assignment Impressions
 - So far from phase 1, I have learned a lot about how to set up a new AI agent using the existing codebase. I have also learned about the Yahoo Finance API. Also that it does rate limits after a certain number of requests. So its not the best tool for scaling. I have also learned more about debugging docker related issues.

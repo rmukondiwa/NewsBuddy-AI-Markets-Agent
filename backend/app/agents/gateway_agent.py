@@ -41,17 +41,17 @@ class GatewayAgent:
             decision = json.loads(response)
             agent_type = decision.get("type", "").upper()
             answer = decision.get("answer", "")
-            logging.info(f"🟢 GatewayAgent chose type: {agent_type} with answer: {answer}")
+            logging.info(f"🟢 GatewayAgent chose type: {agent_type} with answer: {answer}")  # noqa E501
 
             if agent_type not in self.agents.keys():
                 # fallback
-                logging.warning(f"⚠️ Unknown agent type '{agent_type}', falling back to ChatAgent")
+                logging.warning(f"⚠️ Unknown agent type '{agent_type}', falling back to ChatAgent")  # noqa E501
                 return {"type": "CHAT",
                         "agent": ChatAgent(),
                         "answer": user_input}
 
             if agent_type == "MARKETS" and not answer:
-                logging.warning("⚠️ No ticker provided, falling back to ChatAgent")
+                logging.warning("⚠️ No ticker provided, falling back to ChatAgent")  # noqa E501
                 return {
                     "type": "CHAT",
                     "agent": ChatAgent(),
