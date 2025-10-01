@@ -45,6 +45,14 @@ class GatewayAgent:
                 return {"type": "CHAT",
                         "agent": ChatAgent(),
                         "answer": user_input}
+            
+            if agent_type == "MARKETS" and not answer:
+                return {
+                    "type": "CHAT",
+                    "agent": ChatAgent(),
+                    "answer": user_input
+                }
+            
             else:
                 return {"type": agent_type,
                         "agent": self.agents[agent_type],

@@ -75,11 +75,15 @@ class MarketsAgent(BaseAgent):
             return f"User asked: {userInput}\nError: {stockData['error']}"
             
         if "ticker" in stockData: #stock
+            ticker = stockData.get("ticker", "N/A")
+            price = stockData.get("price", "N/A")
+            change = stockData.get("changePercent", "N/A")
+
             return (
                 f"User asked: {userInput}\n\n"
                 f"Stock Data:\n"
-                f"- Ticker: {stockData['ticker']}\n"
-                f"- Current Price: ${stockData['price']}\n"
-                f"- Daily Change: {stockData['changePercent']}%\n"
+                f"- Ticker: {ticker}\n"
+                f"- Current Price: ${price}\n"
+                f"- Daily Change: {change}%\n"
             )
         return f"User asked: {userInput}\nNo relevant market data available."
