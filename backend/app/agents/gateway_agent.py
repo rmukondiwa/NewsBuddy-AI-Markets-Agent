@@ -12,26 +12,25 @@ appropriate agent to handle it or revert to basic Chat agent.
 Add your new agents to its agents dictionary below and import them above.
 The Chat agent is used as the default agent in case no others are appropriate.
 """
-class GatewayAgent:
 
-    
+
+class GatewayAgent:
     def __init__(self):
         self.agents = {
-            "SCRAPE" : ScrapingAgent(),
+            "SCRAPE": ScrapingAgent(),
             # TODO: implement weather agent in class with data from
             #       https://api.weather.gov
             # TODO: implement your own agent(s)
-            "MARKETS" : MarketsAgent(),
+            "MARKETS": MarketsAgent(),
         }
         self.system_msg = """
             You are an intelligent assistant that decides between several options
             or just chat normally.
             Always return your output strictly as a JSON object with the keys
             `type` and `answer` based on the following criteria:
-        """
+        """  # noqa E501
         for a in self.agents.values():
             self.system_msg += a.description()
-
 
     def get_agent(self, user_input: str) -> dict:
         """Given some user_input, decide which agent to use"""
@@ -47,14 +46,14 @@ class GatewayAgent:
                 return {"type": "CHAT",
                         "agent": ChatAgent(),
                         "answer": user_input}
-            
+
             if agent_type == "MARKETS" and not answer:
                 return {
                     "type": "CHAT",
                     "agent": ChatAgent(),
                     "answer": user_input
                 }
-            
+
             else:
                 return {"type": agent_type,
                         "agent": self.agents[agent_type],
