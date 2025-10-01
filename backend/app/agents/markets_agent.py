@@ -45,14 +45,12 @@ class MarketsAgent(BaseAgent):
         """
         try:
             stock = yf.Ticker(ticker)
-            if not stock.info or 'regularMarketPrice' not in stock.info:
-                logging.error(f"No market data found for ticker: {ticker}")
-                return f"Error: No market data found for ticker {ticker}."
+            history = stock.history(period="5d", interval="1d")
 
-            history = stock.history(period="1mo", interval="1d")
+            logging.info(f"Retrieved stock history: {history}")
             if history.empty:
                 logging.error(f"No historical data found for ticker: {ticker}")
-                return f"Error: No historical data found for ticker {ticker}."
+                return {"error": f"No historical data found for ticker {ticker}."}
 
             currentPrice = history["Close"].iloc[-1]
             if len(history) > 1:
@@ -65,14 +63,15 @@ class MarketsAgent(BaseAgent):
             else:
                 changePercent = 0
 
+            logging.info(f"Stock {ticker}: Price={currentPrice}, Change%={changePercent}")
             return {
                 "ticker": ticker,
-                "TimePeriod": "1 month",
+                "TimePeriod": "5 days",
                 "price": round(float(currentPrice), 2),
                 "changePercent": round(float(changePercent), 2),
             }
         except Exception as e:
-            logging.error("Exception, fetching stock price has encountered error")  # noqa E501
+            logging.error("Exception, fetching stock price has encountered error", exc_info=True)  # noqa E501
             return {"error": str(e)}
 
     def buildMarketPrompt(self, userInput: str, stockData: dict) -> str:

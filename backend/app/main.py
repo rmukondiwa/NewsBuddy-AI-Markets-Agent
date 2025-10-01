@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -10,6 +11,9 @@ from .agents.scraping_agent import ScrapingAgent
 # Load configuration values from environment variables
 APP_NAME = os.getenv("APP_NAME")
 CORS_ORIGINS = os.getenv("CORS_ORIGINS")
+origins = [o.strip() for o in CORS_ORIGINS.split(",") if o.strip()]
+
+logging.info(f"Allowed CORS origins: {origins}") 
 
 # Store message as part of data validation and serialization
 class ChatRequest(BaseModel):
