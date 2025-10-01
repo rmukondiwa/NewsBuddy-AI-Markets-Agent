@@ -6,4 +6,4 @@ openai>=1.40.0
 bs4==0.0.1
 requests==2.31.0
 python-dotenv==1.0.0
-yfinance==0.2.27
+yfinance==0.2.66

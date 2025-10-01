@@ -24,10 +24,10 @@ class MarketsAgent(BaseAgent):
     def handle_request(self, ticker: str, userInput: str) -> str:
         """Fetch stock data and summarize with LLM"""
         if not ticker:
-            return "Error: No ticker symbol provided."
+            return "❌ Error: No ticker symbol provided."
 
         if ticker:
-            logging.info(f"Fetching stock data for ticker: {ticker}")
+            logging.info(f"🟢 Fetching stock data for ticker: {ticker}")
             stockData = self.getStockPrice(ticker)
             prompt = self.buildMarketPrompt(userInput, stockData)
             return get_llm_response(prompt, system_msg=self.system_msg)
@@ -49,7 +49,7 @@ class MarketsAgent(BaseAgent):
 
             logging.info(f"Retrieved stock history: {history}")
             if history.empty:
-                logging.error(f"No historical data found for ticker: {ticker}")
+                logging.error(f"❌ No historical data found for ticker: {ticker}")
                 return {"error": f"No historical data found for ticker {ticker}."}  # noqa E501
 
             currentPrice = history["Close"].iloc[-1]
@@ -63,7 +63,7 @@ class MarketsAgent(BaseAgent):
             else:
                 changePercent = 0
 
-            logging.info(f"Stock {ticker}: Price={currentPrice}, Change%={changePercent}")  # noqa E501
+            logging.info(f"🟢 Stock {ticker}: Price={currentPrice}, Change%={changePercent}")  # noqa E501
             return {
                 "ticker": ticker,
                 "TimePeriod": "5 days",
@@ -71,13 +71,13 @@ class MarketsAgent(BaseAgent):
                 "changePercent": round(float(changePercent), 2),
             }
         except Exception as e:
-            logging.error("Exception, fetching stock price has encountered error", exc_info=True)  # noqa E501
+            logging.error("❌ Exception, fetching stock price has encountered error", exc_info=True)  # noqa E501
             return {"error": str(e)}
 
     def buildMarketPrompt(self, userInput: str, stockData: dict) -> str:
         """Construct user input with the market data retrieved from API to send to GPT"""  # noqa E501
         if "error" in stockData:
-            return f"User asked: {userInput}\nError: {stockData['error']}"
+            return f"❌ User asked: {userInput}\nError: {stockData['error']}"
 
         if "ticker" in stockData:  # stock
             ticker = stockData.get("ticker", "N/A")
@@ -91,5 +91,5 @@ class MarketsAgent(BaseAgent):
                 f"- Current Price: ${price}\n"
                 f"- Daily Change: {change}%\n"
             )
-        return f"User asked: {userInput}\nNo relevant market data available."
+        return f"⚠️ User asked: {userInput}\nNo relevant market data available."
     # noqa W292

@@ -1,4 +1,5 @@
 import json
+import logging
 from ..llm import get_llm_response
 from .chat_agent import ChatAgent
 from .scraping_agent import ScrapingAgent
@@ -40,14 +41,17 @@ class GatewayAgent:
             decision = json.loads(response)
             agent_type = decision.get("type", "").upper()
             answer = decision.get("answer", "")
+            logging.info(f"🟢 GatewayAgent chose type: {agent_type} with answer: {answer}")
 
             if agent_type not in self.agents.keys():
                 # fallback
+                logging.warning(f"⚠️ Unknown agent type '{agent_type}', falling back to ChatAgent")
                 return {"type": "CHAT",
                         "agent": ChatAgent(),
                         "answer": user_input}
 
             if agent_type == "MARKETS" and not answer:
+                logging.warning("⚠️ No ticker provided, falling back to ChatAgent")
                 return {
                     "type": "CHAT",
                     "agent": ChatAgent(),
@@ -55,6 +59,7 @@ class GatewayAgent:
                 }
 
             else:
+                logging.info(f"🟢 Using agent type '{agent_type}'")
                 return {"type": agent_type,
                         "agent": self.agents[agent_type],
                         "answer": answer}
