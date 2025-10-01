@@ -50,7 +50,7 @@ class MarketsAgent(BaseAgent):
             logging.info(f"Retrieved stock history: {history}")
             if history.empty:
                 logging.error(f"No historical data found for ticker: {ticker}")
-                return {"error": f"No historical data found for ticker {ticker}."}
+                return {"error": f"No historical data found for ticker {ticker}."}  # noqa E501
 
             currentPrice = history["Close"].iloc[-1]
             if len(history) > 1:
@@ -63,7 +63,7 @@ class MarketsAgent(BaseAgent):
             else:
                 changePercent = 0
 
-            logging.info(f"Stock {ticker}: Price={currentPrice}, Change%={changePercent}")
+            logging.info(f"Stock {ticker}: Price={currentPrice}, Change%={changePercent}")  # noqa E501
             return {
                 "ticker": ticker,
                 "TimePeriod": "5 days",
