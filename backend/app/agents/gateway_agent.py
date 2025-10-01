@@ -13,6 +13,8 @@ Add your new agents to its agents dictionary below and import them above.
 The Chat agent is used as the default agent in case no others are appropriate.
 """
 class GatewayAgent:
+
+    
     def __init__(self):
         self.agents = {
             "SCRAPE" : ScrapingAgent(),

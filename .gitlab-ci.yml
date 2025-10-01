@@ -1,0 +1,44 @@
+image: python:3.11
+
+stages:
+  - lint
+  - test
+  - security
+
+variables:
+  PYTHONPATH: "$CI_PROJECT_DIR/backend"
+
+before_script:
+  - python --version
+  - pip install --upgrade pip
+  # Install dependencies (adjust if you already have requirements.txt)
+  - pip install pytest pytest-cov flake8 bandit # installing all the stuff we need to run tests, flake8 is to lint, bandit is for security checks
+  - pip install -r requirements.txt || true #to install same working dependencies as my machine
+
+lint:
+  stage: lint
+  script:
+    - echo "Running flake8 linting..."
+    - flake8 tests/
+    - flake8 backend/app/agents/markets_agent.py
+    - flake8 backend/app/agents/gateway_agent.py
+
+test:
+  stage: test
+  script:
+    - echo "Running pytest for agents..."
+    # Only run your MarketsAgent tests (not all starter code)
+    - pytest -v tests/test_marketsAgents.py --disable-warnings --maxfail=1 --cov=backend/app/agents/markets_agent
+  artifacts:
+    when: always
+    reports:
+      junit: pytest_junit.xml  #to show test results in gitlab
+    paths:
+      - pytest_junit.xml #to show test results in gitlab
+      - .coverage
+
+security:
+  stage: security
+  script:
+    - echo "Running bandit security scan..."
+    - bandit -r backend/ -ll
