@@ -1,0 +1,218 @@
+rtm45@vcm-49714:~/390repos/ai_agents_rtm45$ docker compose up --build
+[+] Building 0.9s (24/24) FINISHED                                                                 
+ => [internal] load local bake definitions                                                    0.0s
+ => => reading from stdin 1.04kB                                                              0.0s
+ => [backend internal] load build definition from Dockerfile                                  0.0s
+ => => transferring dockerfile: 524B                                                          0.0s
+ => [frontend internal] load build definition from Dockerfile                                 0.1s
+ => => transferring dockerfile: 414B                                                          0.0s
+ => [backend internal] load metadata for docker.io/library/python:3.11-slim                   0.3s
+ => [frontend internal] load metadata for docker.io/library/nginx:1.27-alpine                 0.3s
+ => [frontend internal] load .dockerignore                                                    0.0s
+ => => transferring context: 2B                                                               0.0s
+ => [backend internal] load .dockerignore                                                     0.0s
+ => => transferring context: 2B                                                               0.0s
+ => [frontend 1/5] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b8  0.0s
+ => [frontend internal] load build context                                                    0.0s
+ => => transferring context: 247B                                                             0.0s
+ => CACHED [frontend 2/5] COPY public /public                                                 0.0s
+ => CACHED [frontend 3/5] RUN cp /public/* /usr/share/nginx/html                              0.0s
+ => CACHED [frontend 4/5] COPY ./bin/inject-env.sh /                                          0.0s
+ => CACHED [frontend 5/5] RUN chmod a+x /inject-env.sh                                        0.0s
+ => [frontend] exporting to image                                                             0.0s
+ => => exporting layers                                                                       0.0s
+ => => writing image sha256:fe617a50dffd61f2eec79787d58b79716b65b1cfd8d7153363f7a060ba706687  0.0s
+ => => naming to docker.io/library/ai_agents_rtm45-frontend                                   0.0s
+ => [backend 1/6] FROM docker.io/library/python:3.11-slim@sha256:30a49f1bf6cc823952693ac8cd6  0.1s
+ => => resolve docker.io/library/python:3.11-slim@sha256:30a49f1bf6cc823952693ac8cd6eb7f3224  0.1s
+ => [backend internal] load build context                                                     0.0s
+ => => transferring context: 382B                                                             0.0s
+ => CACHED [backend 2/6] RUN apt-get update &&     apt-get install -y --no-install-recommend  0.0s
+ => CACHED [backend 3/6] WORKDIR /app                                                         0.0s
+ => CACHED [backend 4/6] COPY requirements.txt ./                                             0.0s
+ => CACHED [backend 5/6] RUN pip install --no-cache-dir -r requirements.txt                   0.0s
+ => CACHED [backend 6/6] COPY app ./app                                                       0.0s
+ => [backend] exporting to image                                                              0.0s
+ => => exporting layers                                                                       0.0s
+ => => writing image sha256:6e83e0f9151eaad4181f1be3336261c10de9af4dfc1f5d7443abc28f2e9d7d88  0.0s
+ => => naming to docker.io/library/ai_agents_rtm45-backend                                    0.0s
+ => [frontend] resolving provenance for metadata file                                         0.0s
+ => [backend] resolving provenance for metadata file                                          0.0s
+[+] Running 4/4
+ ✔ ai_agents_rtm45-backend         Built                                                      0.0s 
+ ✔ ai_agents_rtm45-frontend        Built                                                      0.0s 
+ ✔ Container cs390-agent-backend   Recreated                                                  0.1s 
+ ✔ Container cs390-agent-frontend  Recreated                                                  0.1s 
+Attaching to cs390-agent-backend, cs390-agent-frontend
+cs390-agent-backend  | INFO:root:OpenAI client initialized successfully
+cs390-agent-backend  | INFO:root:Allowed CORS origins: ['http://vcm-49714.vm.duke.edu:6083']
+cs390-agent-backend  | INFO:     Started server process [1]
+cs390-agent-backend  | INFO:     Waiting for application startup.
+cs390-agent-backend  | INFO:     Application startup complete.
+cs390-agent-backend  | INFO:     Uvicorn running on http://0.0.0.0:6000 (Press CTRL+C to quit)
+cs390-agent-backend  | INFO:     127.0.0.1:60630 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: using the "epoll" event method
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: nginx/1.27.5
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: built by gcc 14.2.0 (Alpine 14.2.0) 
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: OS: Linux 5.15.0-156-generic
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: start worker processes
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: start worker process 11
+cs390-agent-frontend  | 2025/10/01 18:35:05 [notice] 10#10: start worker process 12
+cs390-agent-backend   | INFO:     127.0.0.1:58302 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:58318 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:42456 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:42470 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50746 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50760 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39526 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39542 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:53236 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:53244 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39356 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39362 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:40852 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:40868 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:37894 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:37896 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60684 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33952 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33954 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:41474 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:41486 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60024 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60032 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:45278 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:45288 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:15 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03\x87\xAA\xFE\x87\x94\xA6\x0E\x8F\x16\xDDT'[91\xD2B_[\x0C\xC6Y\x9FbS)9\xAB\xF5\x00\xA9B \x08\xC3|\xFC~3VD\x93\x1A\x95\x13\xB7\xC4}\xE7\x94\xFEU8\xD7Q3\xC9\x87\x8C\xB6s" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:15 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03\xA8WJ\xB4\xA4\x07bV\xFC\xD5\xB6g\xC5\xF4Y\xB2\xDC<\x0C\xB6\xE4\xF3\xA0\x816\xF1t\xDAf\xB0\x99\x16 \xEE\x81\x11\x0B\x02}\xBE\xD8T" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:15 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03I\xB1\xBB\xF5SRr\xD6?,bX|\x93\xBF\x130\x5CY\xC3\x1F\xD8i5\x87\x02\xA2\xC3}\x0E\xD4< \x10\xB2Se\x9F%\xBA\x86\x8AXV\xD4\xDC\xCDZ\xA6\x83Yv{\xEC\xDB\xF0\x9A\xA8\x964F\xDBY\xC7\x95\x00*\xFA\xFA\x13\x01\x13\x02\x13\x03\xC0,\xC0+\xCC\xA9\xC00\xC0/\xCC\xA8\xC0" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:15 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03\xDA?1\xDE,\x96\xBE\x0C\xBC\x02\xC5\xF3=\xD8\xC9\xF6\x91\xBB\xCD\xD1y\x82\xAF\xC8`v(\x16\xA2\x9C\xB3\x81 \xB5A\x1Ao\x121 S\x08\xCA\xACNHo\xA5\xFEeAm\x1A.\xDC\x00\x01\x0B0\xAA\x14?\xAAY`\x00*zz\x13\x01\x13\x02\x13\x03\xC0,\xC0+\xCC\xA9\xC00\xC0/\xCC\xA8\xC0" 400 157 "-" "-" "-"
+cs390-agent-backend   | INFO:     127.0.0.1:43950 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:21 +0000] "GET /MarketsAgent.html HTTP/1.1" 304 0 "http://vcm-49714.vm.duke.edu:6083/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:21 +0000] "GET /constants.js HTTP/1.1" 404 153 "http://vcm-49714.vm.duke.edu:6083/MarketsAgent.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 2025/10/01 18:37:21 [error] 11#11: *1 open() "/usr/share/nginx/html/constants.js" failed (2: No such file or directory), client: 10.197.154.243, server: localhost, request: "GET /constants.js HTTP/1.1", host: "vcm-49714.vm.duke.edu:6083", referrer: "http://vcm-49714.vm.duke.edu:6083/MarketsAgent.html"
+cs390-agent-frontend  | 10.197.154.243 - - [01/Oct/2025:18:37:21 +0000] "GET /app.js HTTP/1.1" 200 3418 "http://vcm-49714.vm.duke.edu:6083/MarketsAgent.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-backend   | INFO:     127.0.0.1:43964 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:56808 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     10.197.154.243:58525 - "OPTIONS /api/chat HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: 
+cs390-agent-backend   |             You are an intelligent assistant that decides between several options
+cs390-agent-backend   |             or just chat normally.
+cs390-agent-backend   |             Always return your output strictly as a JSON object with the keys
+cs390-agent-backend   |             `type` and `answer` based on the following criteria:
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains a URL, return:
+cs390-agent-backend   |               {"type": "SCRAPE", "answer": "<the first URL from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains keywords related to financial markets, stocks, investing. Or even an actual stock ticker return:
+cs390-agent-backend   |             {"type": "MARKETS", "answer": "<the stock ticker belonging to the stock from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   | INFO:     127.0.0.1:56820 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:root:🟢 GatewayAgent chose type: CHAT with answer: I'm just a program, but I'm here to help you! How can I assist you today?
+cs390-agent-backend   | WARNING:root:⚠️ Unknown agent type 'CHAT', falling back to ChatAgent
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: 
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:     10.197.154.243:58525 - "POST /api/chat HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43708 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43722 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50740 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50754 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: 
+cs390-agent-backend   |             You are an intelligent assistant that decides between several options
+cs390-agent-backend   |             or just chat normally.
+cs390-agent-backend   |             Always return your output strictly as a JSON object with the keys
+cs390-agent-backend   |             `type` and `answer` based on the following criteria:
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains a URL, return:
+cs390-agent-backend   |               {"type": "SCRAPE", "answer": "<the first URL from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains keywords related to financial markets, stocks, investing. Or even an actual stock ticker return:
+cs390-agent-backend   |             {"type": "MARKETS", "answer": "<the stock ticker belonging to the stock from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:root:🟢 GatewayAgent chose type: MARKETS with answer: NVDA
+cs390-agent-backend   | INFO:root:🟢 Using agent type 'MARKETS'
+cs390-agent-backend   | INFO:root:🟢 Fetching stock data for ticker: NVDA
+cs390-agent-backend   | INFO:root:Retrieved stock history:                                  Open        High  ...  Dividends  Stock Splits
+cs390-agent-backend   | Date                                               ...                         
+cs390-agent-backend   | 2025-09-25 00:00:00-04:00  174.479996  180.259995  ...        0.0           0.0
+cs390-agent-backend   | 2025-09-26 00:00:00-04:00  178.169998  179.770004  ...        0.0           0.0
+cs390-agent-backend   | 2025-09-29 00:00:00-04:00  180.429993  184.000000  ...        0.0           0.0
+cs390-agent-backend   | 2025-09-30 00:00:00-04:00  182.080002  187.350006  ...        0.0           0.0
+cs390-agent-backend   | 2025-10-01 00:00:00-04:00  185.210007  188.139999  ...        0.0           0.0
+cs390-agent-backend   | 
+cs390-agent-backend   | [5 rows x 7 columns]
+cs390-agent-backend   | INFO:root:🟢 Stock NVDA: Price=187.47000122070312, Change%=0.4770068500987143
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: You are a helpful assistant called 'FinanceBro' that provides information about financial markets.
+cs390-agent-backend   |                 Talk like a College Fraternity Brother who is super into stocks and wants to work on Wall Street.
+cs390-agent-backend   |                 You will use the given stock data and user input, then provide a concise and engaging summary,
+cs390-agent-backend   |                 your thoughts on the reasonings behind the stock movements, and any advice you might have.
+cs390-agent-backend   |                 Keep it brief and to the point. Add a little humor.
+cs390-agent-backend   |                 But be concise whilst providing valuable bullet points.
+cs390-agent-backend   |                 Although you sound like a frat bro, you need to sound really friendly
+cs390-agent-backend   |                 and almost like a knowledgeable fun big brother.
+cs390-agent-backend   | INFO:     127.0.0.1:48994 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:     10.197.154.243:58547 - "POST /api/chat HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:48996 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:34872 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:34876 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:44336 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:44340 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:44912 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:44928 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43558 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43574 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33040 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33048 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:58160 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:58164 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43928 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43930 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60332 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60348 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:41356 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:41370 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50460 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:50470 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60384 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:60398 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:56366 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:56380 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33476 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:33480 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:49416 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:49428 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:36398 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:36414 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:38870 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:38882 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43022 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:43034 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55782 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55796 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:49706 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:49710 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:47542 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:47548 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39716 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:39720 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55214 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55228 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55868 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:55880 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:59206 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:59220 - "GET /health HTTP/1.1" 200 OK
+Gracefully Stopping... press Ctrl+C again to force
+ Container cs390-agent-frontend  Stopping
+cs390-agent-backend   | INFO:     127.0.0.1:52304 - "GET /health HTTP/1.1" 200 OK
+ Container cs390-agent-frontend  Stopped
+ Container cs390-agent-backend  Stopping
+ Container cs390-agent-backend  Stopped
+
