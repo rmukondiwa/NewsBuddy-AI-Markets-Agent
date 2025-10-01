@@ -28,7 +28,7 @@ test:
   script:
     - echo "Running pytest for agents..."
     # Only run your MarketsAgent tests (not all starter code)
-    - pytest -v tests/test_marketsAgents.py --disable-warnings --maxfail=1 --cov=backend/app/agents/markets_agent
+    - pytest -v tests/test_marketsAgents.py --disable-warnings --maxfail=1 --cov=backend/app/agents/markets_agent --junitxml=pytest_junit.xml
   artifacts:
     when: always
     reports:
