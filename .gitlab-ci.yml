@@ -7,6 +7,7 @@ stages:
 
 variables:
   PYTHONPATH: "$CI_PROJECT_DIR/backend"
+  OPENAI_API_KEY: "dummy"
 
 before_script:
   - python --version
