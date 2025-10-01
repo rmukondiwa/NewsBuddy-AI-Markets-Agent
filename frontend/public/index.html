@@ -1,13 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raphael's AI Agents</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Updated fonts to Work Sans and Open Sans for startup aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Updated color scheme to purple startup theme */
+        :root {
+            --background: #ffffff;
+            --foreground: #4b5563;
+            --card: #f3f4f6;
+            --card-foreground: #4b5563;
+            --primary: #6b5b9a;
+            --primary-foreground: #ffffff;
+            --accent: #a77bca;
+            --accent-foreground: #ffffff;
+            --border: #e2e8f0;
+            --radius: 0.5rem;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            /* Purple gradient background for startup vibe */
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 25%, #4a2c6d 50%, #6b5b9a 75%, #8b7ab8 100%);
+            color: var(--foreground);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Added animated gradient overlay with purple tones */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(167, 123, 202, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(107, 91, 154, 0.15), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            /* Glass morphism header with purple tint */
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            /* White text with subtle glow for logo */
+            color: #ffffff;
+            text-decoration: none;
+            text-shadow: 0 0 30px rgba(167, 123, 202, 0.5);
+            letter-spacing: -0.5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Added decorative gradient orbs for depth */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(167, 123, 202, 0.3), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(107, 91, 154, 0.3), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 900;
+            font-size: 4rem;
+            /* Bright white text with purple gradient glow */
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            text-shadow: 0 0 40px rgba(167, 123, 202, 0.6);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            /* Light purple/white text for subtitle */
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* Agent Cards */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding-bottom: 6rem;
+        }
+
+        .agent-card {
+            /* Glass morphism cards with purple border */
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Added gradient overlay on hover */
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(167, 123, 202, 0.1), rgba(107, 91, 154, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .agent-card:hover::before {
+            opacity: 1;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(167, 123, 202, 0.4);
+            border: 1px solid rgba(167, 123, 202, 0.5);
+        }
+
+        .agent-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .agent-icon {
+            width: 70px;
+            height: 70px;
+            /* Purple gradient background for icons */
+            background: linear-gradient(135deg, #a77bca 0%, #6b5b9a 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            box-shadow: 0 8px 24px rgba(167, 123, 202, 0.4);
+        }
+
+        .agent-card h2 {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            /* White text for card headings */
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .agent-card p {
+            /* Light text for card descriptions */
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            /* Bright purple gradient button */
+            background: linear-gradient(135deg, #a77bca 0%, #6b5b9a 100%);
+            color: var(--primary-foreground);
+            box-shadow: 0 4px 20px rgba(167, 123, 202, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #b88dd4 0%, #7c6ba8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(167, 123, 202, 0.6);
+        }
+
+        .btn-accent {
+            /* White button with purple text for contrast */
+            background: rgba(255, 255, 255, 0.95);
+            color: #6b5b9a;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+            width: 100%;
+            font-weight: 700;
+        }
+
+        .btn-accent:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+            color: #5a4a82;
+        }
+
+        /* Footer */
+        footer {
+            /* Dark purple footer with glass effect */
+            background: rgba(26, 11, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-foreground);
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero {
+                padding: 5rem 0 4rem;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .agent-card {
+                padding: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .agent-card {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .agent-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .agent-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        /* Added floating animation for hero section */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            animation: fadeInUp 0.8s ease forwards, float 6s ease-in-out infinite 1s;
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello World</h1>
-  <a href="/scrapingAgent.html">Go to Scraping Agent</a>
-  <a href="/MarketsAgent.html">Go to Markets Agent</a>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">Raphael's AI Agents</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Raphael's AI Agents</h1>
+                <p class="subtitle">
+                    Choose between 3 different AI Experts!
+                </p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-icon">🔍</div>
+                    <h2>Scraping Agent</h2>
+                    <p>
+                        Intelligent web scraping powered by AI. Extract data from any 
+                        website with precision and speed, handling complex structures 
+                        and dynamic content effortlessly.
+                    </p>
+                    <a href="/scrapingAgent.html" class="btn btn-accent">
+                        Launch Scraping Agent →
+                    </a>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-icon">📈</div>
+                    <h2>FinanceBro - A Markets Agent</h2>
+                    <p>
+                        Intelligent financial analysis and market insights. Get real-time stock
+                        data, and communicate with a chatbot to make informed investment decisions.
+                    </p>
+                    <a href="/MarketsAgent.html" class="btn btn-accent">
+                        Launch Finance Bro →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Raphael's AI Agents. Phase 1.</p>
+        </div>
+    </footer>
 </body>
-</html> 
+</html>
