@@ -13,7 +13,7 @@ before_script:
   - pip install --upgrade pip
   # Install dependencies (adjust if you already have requirements.txt)
   - pip install pytest pytest-cov flake8 bandit # installing all the stuff we need to run tests, flake8 is to lint, bandit is for security checks
-  - pip install -r requirements.txt || true #to install same working dependencies as my machine
+  - pip install -r backend/requirements.txt || true #to install same working dependencies as my machine
 
 lint:
   stage: lint
@@ -34,7 +34,6 @@ test:
     reports:
       junit: pytest_junit.xml  #to show test results in gitlab
     paths:
-      - pytest_junit.xml #to show test results in gitlab
       - .coverage
 
 security:
