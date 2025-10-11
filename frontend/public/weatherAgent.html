@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raphael's Weather AI Agent </title>
+  <title>Weather AI Agent </title>
   <style>
     :root{
-      --bg:#0b0c10; --text:#0f172a; --muted:#64748b; --card:#ffffff; --border:#e5e7eb;
+      --bg:#0f100b; --text:#0f172a; --muted:#64748b; --card:#ffffff; --border:#e5e7eb;
       --ring:#6366f1; --chip-bg:#eef2ff; --chip-txt:#3730a3; --btn:#0f172a; --btn-bg:#f1f5f9;
       --btn-bg-hover:#e2e8f0; --success:#16a34a; --error:#ef4444;
     }
@@ -17,7 +17,7 @@
 
     /* Header */
     .hero{
-      background:linear-gradient(180deg, #0b0c10 0%, #12131a 100%);
+      background:linear-gradient(180deg, #fff700 0%, #000000 100%);
       color:#fff; border-radius:18px; padding:28px 22px; margin-bottom:22px;
       box-shadow: 0 6px 22px rgba(2,6,23,.25);
     }
@@ -83,8 +83,8 @@
 <body>
   <div class="container">
     <section class="hero">
-      <h1>CS390 Web Scraping AI Agent Demo</h1>
-      <div class="chip">FastAPI • Nginx • DukeGPT AI Agent</div>
+      <h1>Raphael's Weather Agent </h1>
+      <div class="chip">FastAPI • Nginx • ChatGPT AI Agent</div>
       <p class="sub">Open the browser console for network logs. This page calls the backend API running in a separate container.</p>
     </section>
 
@@ -93,19 +93,20 @@
       <div class="toolbar">
         <span class="status" id="chatStatus">Ready</span>
       </div>
-      <h3>Classroom Web Scraping AI Agent</h3>
+      <h3>Weather AI Agent</h3>
       <p class="hint">Talk to a DukeGPT-powered AI agent via the backend. The backend keeps the API key safe.</p>
 
       <div id="chatLog" class="chat" aria-live="polite"></div>
 
       <div class="row">
-        <input id="chatInput" type="text" placeholder="Ask me to summarize a web page" onkeypress="submit(event)" style="flex:1; min-width:240px;" />
+        <input id="chatInput" type="text" placeholder="Ask me about the weather" onkeypress="submit(event)" style="flex:1; min-width:240px;" />
         <button class="btn-primary" id="btnChat" onclick="sendChat()">Send</button>
         <button onclick="clearChat()">Clear</button>
       </div>
     </section>
   </div>
 
+  <script src="constants.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

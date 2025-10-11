@@ -4,6 +4,7 @@ from ..llm import get_llm_response
 from .chat_agent import ChatAgent
 from .scraping_agent import ScrapingAgent
 from .markets_agent import MarketsAgent
+from .weather_agent import WeatherAgent
 
 
 """
@@ -19,9 +20,7 @@ class GatewayAgent:
     def __init__(self):
         self.agents = {
             "SCRAPE": ScrapingAgent(),
-            # TODO: implement weather agent in class with data from
-            #       https://api.weather.gov
-            # TODO: implement your own agent(s)
+            "WEATHER": WeatherAgent(),
             "MARKETS": MarketsAgent(),
         }
         self.system_msg = """
@@ -60,6 +59,7 @@ class GatewayAgent:
 
             else:
                 logging.info(f"🟢 Using agent type '{agent_type}'")
+                logging.info(f"🟢 Answer to pass to agent: {answer}")
                 return {"type": agent_type,
                         "agent": self.agents[agent_type],
                         "answer": answer}
