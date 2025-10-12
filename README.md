@@ -6,15 +6,18 @@ Raphael Mukondiwa
 ### Project Purpose
 - Phase 1: 
     -Adding a Markets Agent, called FinanceBro. This agent uses yahoo finance API to provide stock market information. Then the stock information, user input, and system instructions are sent to the GPT-O4-Mini model to generate a response.
+- Phase 2:
+   - Added a Weather Agent, called WeatherBro. This agent uses the API-Ninjas weather API to provide current weather information for a given city. The weather information, user input, and system instructions are sent to the GPT-4-Mini model to generate a response.
+   - Added a News Sentiment Agent, called NewsBro. This agent uses the GNews API and Yfinance to provide current news articles for a given topic. The news articles, user input, and system instructions are sent to the GPT-4-Mini model to generate a response.
 
 
 ### Timeline
 
  * Start Date: September 25, 2025
 
- * Finish Date: October 1, 2025
+ * Finish Date: October 12, 2025
 
- * Hours Spent: ~15 hours
+ * Hours Spent: ~25 hours
 
 
 
@@ -69,8 +72,12 @@ Raphael Mukondiwa
 
  * Features implemented:
     - A Markets AI Agent
+    - A Weather AI Agent
+    - A News Sentiment AI Agent
     - Backend logs
     - Tests for the Markets Agent
+    - Tests for the Weather Agent
+    - Tests for the News Agent
     - Added Constants file for backend urls
 
  * Features unimplemented:
@@ -86,6 +93,6 @@ Raphael Mukondiwa
     - My goal for Phase2 is to explore other api tools like Polygon and Alpaca for the next phase, which are more scalable and won't have rate limiting issues.
 
 ### Assignment Impressions
-- So far from phase 1, I have learned a lot about how to set up a new AI agent using the existing codebase. I have also learned about the Yahoo Finance API. Also that it does rate limits after a certain number of requests. So its not the best tool for scaling. I have also learned more about debugging docker related issues.
+- I've learned a lot about how to build AI agents and using multiple APIs to get data. I've also learned a lot about how to deploy a full stack application using Docker and FastAPI. Overall, I think this was a great learning experience and I'm excited to continue building on what I've learned in future projects.
 
 
