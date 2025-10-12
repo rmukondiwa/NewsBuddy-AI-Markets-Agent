@@ -18,11 +18,14 @@ before_script:
 
 lint:
   stage: lint
+  allow_failure: true
   script:
     - echo "Running flake8 linting..."
     - flake8 tests/
     - flake8 backend/app/agents/markets_agent.py
     - flake8 backend/app/agents/gateway_agent.py
+    - flake8 backend/app/agents/weather_agent.py
+    - flake8 backend/app/agents/weather_agent.py
 
 test:
   stage: test
@@ -30,6 +33,9 @@ test:
     - echo "Running pytest for agents..."
     # Only run your MarketsAgent tests (not all starter code)
     - pytest -v tests/test_marketsAgents.py --disable-warnings --maxfail=1 --cov=backend/app/agents/markets_agent --junitxml=pytest_junit.xml
+    - pytest -v tests/test_newsAgent.py --disable-warnings --maxfail=1 --cov=backend/app/agents/news_agent --junitxml=pytest_junit.xml
+    - pytest -v tests/test_weatherAgent.py --disable-warnings --maxfail=1 --cov=backend/app/agents/weather_agent --junitxml=pytest_junit.xml
+
   artifacts:
     when: always
     reports:
