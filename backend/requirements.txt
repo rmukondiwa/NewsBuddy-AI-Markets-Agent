@@ -7,3 +7,6 @@ bs4==0.0.1
 requests==2.31.0
 python-dotenv==1.0.0
 yfinance==0.2.66
+langchain==0.3.4
+langchain-openai==0.2.3
+langchain-community==0.3.2
