@@ -29,7 +29,6 @@ class WeatherAgent(BaseAgent):
         """Gets weather data for given coordinates and summarize via LLM."""
         if not coords:
             return "❌ Error: No coordinates provided. Expected [latitude, longitude]."
-
         if isinstance(coords, str):
             try:
                 coords = json.loads(coords)
@@ -42,6 +41,9 @@ class WeatherAgent(BaseAgent):
         lat, lon = coords
         logging.info(f"🟢 Fetching weather data for coordinates: ({lat}, {lon})")
         weather_data = self.get_weather_data(lat, lon)
+        if not weather_data:
+            return "❌ Error: Could not retrieve weather data."
+        
         prompt = self.build_weather_prompt(user_input, lat, lon, weather_data)
         return get_llm_response(prompt, system_msg=self.system_msg)
 

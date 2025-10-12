@@ -19,10 +19,11 @@ def agent():
 
 def test_description(agent):
     desc = agent.description()
-    assert "financial markets" in desc
-    assert "stocks" in desc
-    assert "investing" in desc
     assert "MARKETS" in desc
+    assert "stock" in desc.lower()
+    assert "price" in desc.lower()
+    # Verify that the NEWS distinction is clear
+    assert "NEWS" in desc
 
 
 def test_buildMarketPrompt_with_valid_data(agent):
