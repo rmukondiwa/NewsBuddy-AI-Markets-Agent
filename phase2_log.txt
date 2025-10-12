@@ -1,0 +1,170 @@
+rtm45@vcm-49714:~/390repos/ai_agents_rtm45$ docker compose up --build
+[+] Building 70.0s (24/24) FINISHED                                                                
+ => [internal] load local bake definitions                                                    0.0s
+ => => reading from stdin 1.04kB                                                              0.0s
+ => [backend internal] load build definition from Dockerfile                                  0.0s
+ => => transferring dockerfile: 524B                                                          0.0s
+ => [frontend internal] load build definition from Dockerfile                                 0.0s
+ => => transferring dockerfile: 414B                                                          0.0s
+ => [backend internal] load metadata for docker.io/library/python:3.11-slim                   0.2s
+ => [frontend internal] load metadata for docker.io/library/nginx:1.27-alpine                 0.2s
+ => [backend internal] load .dockerignore                                                     0.0s
+ => => transferring context: 2B                                                               0.0s
+ => [frontend internal] load .dockerignore                                                    0.0s
+ => => transferring context: 2B                                                               0.0s
+ => [backend 1/6] FROM docker.io/library/python:3.11-slim@sha256:5e9093a415c674b51e705d42dde  0.0s
+ => [backend internal] load build context                                                     0.0s
+ => => transferring context: 473B                                                             0.0s
+ => [frontend 1/5] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b8  0.0s
+ => [frontend internal] load build context                                                    0.0s
+ => => transferring context: 371B                                                             0.0s
+ => CACHED [backend 2/6] RUN apt-get update &&     apt-get install -y --no-install-recommend  0.0s
+ => CACHED [backend 3/6] WORKDIR /app                                                         0.0s
+ => CACHED [backend 4/6] COPY requirements.txt ./                                             0.0s
+ => [backend 5/6] RUN pip install --no-cache-dir -r requirements.txt                         59.2s
+ => CACHED [frontend 2/5] COPY public /public                                                 0.0s
+ => CACHED [frontend 3/5] RUN cp /public/* /usr/share/nginx/html                              0.0s
+ => CACHED [frontend 4/5] COPY ./bin/inject-env.sh /                                          0.0s
+ => CACHED [frontend 5/5] RUN chmod a+x /inject-env.sh                                        0.0s
+ => [frontend] exporting to image                                                             0.0s
+ => => exporting layers                                                                       0.0s
+ => => writing image sha256:2e30996cfb4b1ddfbadff6c5478d19a565e1aa5e7cb1fc656ec4dddb171e8961  0.0s
+ => => naming to docker.io/library/ai_agents_rtm45-frontend                                   0.0s
+ => [frontend] resolving provenance for metadata file                                         0.1s
+ => [backend 6/6] COPY app ./app                                                              0.1s 
+ => [backend] exporting to image                                                              9.9s 
+ => => exporting layers                                                                       9.9s 
+ => => writing image sha256:7020724e1b9ea5c67e9fa5492ba11f9bb1b08d3cd597b3d1228e6d433ec7ef92  0.0s 
+ => => naming to docker.io/library/ai_agents_rtm45-backend                                    0.0s 
+ => [backend] resolving provenance for metadata file                                          0.1s 
+[+] Running 4/4
+ ✔ ai_agents_rtm45-backend         Built                                                      0.0s 
+ ✔ ai_agents_rtm45-frontend        Built                                                      0.0s 
+ ✔ Container cs390-agent-backend   Recreated                                                  0.1s 
+ ✔ Container cs390-agent-frontend  Recreated                                                  0.1s 
+Attaching to cs390-agent-backend, cs390-agent-frontend
+cs390-agent-backend  | INFO:root:OpenAI client initialized successfully
+cs390-agent-backend  | INFO:root:Allowed CORS origins: ['http://vcm-49714.vm.duke.edu:6083']
+cs390-agent-backend  | INFO:     Started server process [1]
+cs390-agent-backend  | INFO:     Waiting for application startup.
+cs390-agent-backend  | INFO:     Application startup complete.
+cs390-agent-backend  | INFO:     Uvicorn running on http://0.0.0.0:6000 (Press CTRL+C to quit)
+cs390-agent-backend  | INFO:     127.0.0.1:45102 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: using the "epoll" event method
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: nginx/1.27.5
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: built by gcc 14.2.0 (Alpine 14.2.0) 
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: OS: Linux 5.15.0-157-generic
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: start worker processes
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: start worker process 12
+cs390-agent-frontend  | 2025/10/12 03:24:59 [notice] 11#11: start worker process 13
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03\x83\x8FR\x99\xB6\x7F\xAE\xF6Fn6r\xB8\xA3\xE1\xBB:\x12\x04\xD0\xF9\xCC\x84\xD7\xC3\xA0\xE4;\xD1\x18\x94\xD4 \x09\xD24\xDC\xF5\xDE\x00,av&\xD8\x94v,<}v\x99]\xA3\x9FY'S\xDFW\xB7\x13\x82TN\x00*ZZ\x13\x01\x13\x02\x13\x03\xC0,\xC0+\xCC\xA9\xC00\xC0/\xCC\xA8\xC0" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03\xD0\x019" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x032\xC8\xBC*\x9A\x97\xA11:\xB7\x83\x88\xCD\xE6\xBE;\xD38=o\x8F\x9F\x8E7\x89o2\xAFB\x8B\xB5S :\x95\xC4:\xA8\x06\xB3)C%~\xFE3\xD1\xFC\xAAJ\x8B\xB3\xE6\x04P|\x97\x0C\x15\x05Rd\xB2\xD3\x1D\x00*" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "\x16\x03\x01\x02\x00\x01\x00\x01\xFC\x03\x03R,t\xCB-\x7F\xA9\x03m\xBC\xF86B\x11\xE8\xB9\x9A\xD1\xF2\xB4~vb\xABI5\x00" 400 157 "-" "-" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "GET / HTTP/1.1" 200 13107 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "GET /favicon.ico HTTP/1.1" 404 153 "http://vcm-49714.vm.duke.edu:6083/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 2025/10/12 03:25:02 [error] 12#12: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 10.197.252.73, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "vcm-49714.vm.duke.edu:6083", referrer: "http://vcm-49714.vm.duke.edu:6083/"
+cs390-agent-frontend  | 2025/10/12 03:25:02 [error] 12#12: *6 open() "/usr/share/nginx/html/apple-touch-icon-precomposed.png" failed (2: No such file or directory), client: 10.197.252.73, server: localhost, request: "GET /apple-touch-icon-precomposed.png HTTP/1.1", host: "vcm-49714.vm.duke.edu:6083"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 153 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Safari" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:02 +0000] "GET /apple-touch-icon.png HTTP/1.1" 404 153 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Safari" "-"
+cs390-agent-frontend  | 2025/10/12 03:25:02 [error] 12#12: *6 open() "/usr/share/nginx/html/apple-touch-icon.png" failed (2: No such file or directory), client: 10.197.252.73, server: localhost, request: "GET /apple-touch-icon.png HTTP/1.1", host: "vcm-49714.vm.duke.edu:6083"
+cs390-agent-backend   | INFO:     127.0.0.1:46076 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:46092 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:12 +0000] "GET /weatherAgent.html HTTP/1.1" 200 4774 "http://vcm-49714.vm.duke.edu:6083/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:12 +0000] "GET /constants.js HTTP/1.1" 200 383 "http://vcm-49714.vm.duke.edu:6083/weatherAgent.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:12 +0000] "GET /app.js HTTP/1.1" 200 3418 "http://vcm-49714.vm.duke.edu:6083/weatherAgent.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-backend   | INFO:     127.0.0.1:37666 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:37668 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     10.197.252.73:55276 - "OPTIONS /api/chat HTTP/1.1" 200 OK
+cs390-agent-backend   | /app/app/agents/news_agent.py:23: LangChainDeprecationWarning: Please see the migration guide at: https://python.langchain.com/docs/versions/migrating_memory/
+cs390-agent-backend   |   self.memory = ConversationBufferMemory(memory_key="history", return_messages=True)
+cs390-agent-backend   | /app/app/agents/news_agent.py:24: LangChainDeprecationWarning: The class `ConversationChain` was deprecated in LangChain 0.2.7 and will be removed in 1.0. Use :meth:`~RunnableWithMessageHistory: https://python.langchain.com/v0.2/api_reference/core/runnables/langchain_core.runnables.history.RunnableWithMessageHistory.html` instead.
+cs390-agent-backend   |   self.chain = ConversationChain(llm=self.llm, memory=self.memory, verbose=False)
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: 
+cs390-agent-backend   |             You are an intelligent assistant that decides between several options
+cs390-agent-backend   |             or just chat normally.
+cs390-agent-backend   |             Always return your output strictly as a JSON object with the keys
+cs390-agent-backend   |             `type` and `answer` based on the following criteria:
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains a URL, return:
+cs390-agent-backend   |               {"type": "SCRAPE", "answer": "<the first URL from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input asks about weather, temperature, humidity, or forecast
+cs390-agent-backend   |               (e.g., "weather in Paris", "is it raining in New York?", "temperature in Durham"),
+cs390-agent-backend   |               return:
+cs390-agent-backend   |             {"type": "WEATHER", "answer": "[<latitude>, <longitude>]"}
+cs390-agent-backend   |             - If and ONLY IF the user asks about a stock price call MARKETS. If they want anything else related to a company, and or If they want news sentiment or to know what is going on the the company, call NEWS. But if not return:
+cs390-agent-backend   |             {"type": "MARKETS", "answer": "<the stock ticker belonging to the stock from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   | INFO:     127.0.0.1:54268 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:root:🟢 GatewayAgent chose type: WEATHER with answer: [35.994, -78.898]
+cs390-agent-backend   | INFO:root:🟢 Using agent type 'WEATHER'
+cs390-agent-backend   | INFO:root:🟢 Answer to pass to agent: [35.994, -78.898]
+cs390-agent-backend   | INFO:root:🟢 Fetching weather data for coordinates: (35.994, -78.898)
+cs390-agent-backend   | INFO:root:🌤️ Received weather data: {'cloud_pct': 100, 'temp': 17, 'feels_like': 17, 'humidity': 92, 'min_temp': 17, 'max_temp': 17, 'wind_speed': 5.45, 'wind_degrees': 12, 'sunrise': 1760181534, 'sunset': 1760222717}
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: You are a friendly, informative weather assistant called 'WeatherBro'.
+cs390-agent-backend   |             Talk like a College Fraternity Brother who is super into the weather and climate. 
+cs390-agent-backend   |             You summarize current weather data for the given city, making your tone calm,
+cs390-agent-backend   |             optimistic, and concise. You will be given data in the metric system but convert it to imperial. 
+cs390-agent-backend   |             Explain the temperature, humidity, wind, and general conditions
+cs390-agent-backend   |             in an engaging, natural way — as if you're chatting with a curious pledge.
+cs390-agent-backend   |             Include helpful advice such as clothing suggestions or activity recommendations.
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:     10.197.252.73:55276 - "POST /api/chat HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:54274 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:52842 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:52960 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:52968 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:47200 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:52 +0000] "GET /newsBuddy.html HTTP/1.1" 200 4758 "http://vcm-49714.vm.duke.edu:6083/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-frontend  | 10.197.252.73 - - [12/Oct/2025:03:25:52 +0000] "GET /app.js HTTP/1.1" 304 0 "http://vcm-49714.vm.duke.edu:6083/newsBuddy.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15" "-"
+cs390-agent-backend   | INFO:     127.0.0.1:47202 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:35538 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:35546 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:54816 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:54818 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:root:Sending request to model gpt-4o-mini with system message: 
+cs390-agent-backend   |             You are an intelligent assistant that decides between several options
+cs390-agent-backend   |             or just chat normally.
+cs390-agent-backend   |             Always return your output strictly as a JSON object with the keys
+cs390-agent-backend   |             `type` and `answer` based on the following criteria:
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input contains a URL, return:
+cs390-agent-backend   |               {"type": "SCRAPE", "answer": "<the first URL from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   |             - If the user input asks about weather, temperature, humidity, or forecast
+cs390-agent-backend   |               (e.g., "weather in Paris", "is it raining in New York?", "temperature in Durham"),
+cs390-agent-backend   |               return:
+cs390-agent-backend   |             {"type": "WEATHER", "answer": "[<latitude>, <longitude>]"}
+cs390-agent-backend   |             - If and ONLY IF the user asks about a stock price call MARKETS. If they want anything else related to a company, and or If they want news sentiment or to know what is going on the the company, call NEWS. But if not return:
+cs390-agent-backend   |             {"type": "MARKETS", "answer": "<the stock ticker belonging to the stock from user input>"}
+cs390-agent-backend   |         
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root: Received response from OPENAI rahh
+cs390-agent-backend   | INFO:root:🟢 GatewayAgent chose type: NEWS with answer: Tesla
+cs390-agent-backend   | INFO:root:🟢 Using agent type 'NEWS'
+cs390-agent-backend   | INFO:root:🟢 Answer to pass to agent: Tesla
+cs390-agent-backend   | INFO:root:📰 Fetching news + stock sentiment for TSLA
+cs390-agent-backend   | INFO:root:🌐 Fetching GNews for: TSLA
+cs390-agent-backend   | INFO:root:📰 GNews returned 5 articles for TSLA
+cs390-agent-backend   | INFO:root:📰 News context preview: - Tesla's 'Model 2' Is Here - What Does It Mean Ahead Of Earnings? (Seeking Alpha, 2025-10-10)
+cs390-agent-backend   |   https://seekingalpha.com/article/4829141-tesla-model-2-what-does-it-mean-ahead-of-earnings
+cs390-agent-backend   | - Veteran Te
+cs390-agent-backend   | INFO:root:Retrieved stock history:                                  Open        High  ...  Dividends  Stock Splits
+cs390-agent-backend   | Date                                               ...                         
+cs390-agent-backend   | 2025-10-06 00:00:00-04:00  440.750000  453.549988  ...        0.0           0.0
+cs390-agent-backend   | 2025-10-07 00:00:00-04:00  447.820007  452.679993  ...        0.0           0.0
+cs390-agent-backend   | 2025-10-08 00:00:00-04:00  437.570007  441.329987  ...        0.0           0.0
+cs390-agent-backend   | 2025-10-09 00:00:00-04:00  431.809998  436.350006  ...        0.0           0.0
+cs390-agent-backend   | 2025-10-10 00:00:00-04:00  436.540009  443.130005  ...        0.0           0.0
+cs390-agent-backend   | 
+cs390-agent-backend   | [5 rows x 7 columns]
+cs390-agent-backend   | INFO:root:🟢 Stock TSLA: Price=413.489990234375, Change%=-5.062684914805621
+cs390-agent-backend   | INFO:     127.0.0.1:42408 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:     127.0.0.1:42424 - "GET /health HTTP/1.1" 200 OK
+cs390-agent-backend   | INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+cs390-agent-backend   | INFO:root:🧠 LangChain raw result: {'input': "User asked: Tell me news about Tesla\n\n--- Recent News for TSLA ---\n- Tesla's 'Model 2' Is Here - What Does It Mean Ahead Of Earnings? (Seeking Alpha, 2025-10-10)\n  https://seekingalpha.com/article/4829141-tesla-model-2-what-does-it-mean-ahead-of-earnings\n- Veteran Tesla analyst drops jaw-dropping new price target (The Street, 2025-10-10)\n  https://www.thestreet.com/technology/veteran-tesla-analyst-drops-jaw-dropping-new-price-target\n- Tesla: Great Company; Wrong Price (Seeking Alpha, 2025-10-09)\n  https://seekingalpha.com/article/4828954-tesla-great-company-wrong-price\n- SA analyst upgrades/downgrades: META, AMD, TSLA, DLTR (Seeking Alpha, 2025-10-09)\n  https://seekingalpha.com/news/4503084-sa-analyst-upgradesdowngrades-meta-amd-tsla-dltr\n- Tesla Stock Is Trading Lower Thursday: What's Driving The Action? (Benzinga, 2025-10-09)\n  https://www.benzinga.com/trading-ideas/movers/25/10/48129383/tesla-stock-is-trading-lower-thursday-whats-driving-the-action\n\n--- Market Context ---\nTSLA current price: $413.49, change: -5.06%.\n\nNow synthesize both to describe overall sentiment and reasoning.", 'history': [HumanMessage(content="User asked: Tell me news about Tesla\n\n--- Recent News for TSLA ---\n- Tesla's 'Model 2' Is Here - What Does It Mean Ahead Of Earnings? (Seeking Alpha, 2025-10-10)\n  https://seekingalpha.com/article/4829141-tesla-model-2-what-does-it-mean-ahead-of-earnings\n- Veteran Tesla analyst drops jaw-dropping new price target (The Street, 2025-10-10)\n  https://www.thestreet.com/technology/veteran-tesla-analyst-drops-jaw-dropping-new-price-target\n- Tesla: Great Company; Wrong Price (Seeking Alpha, 2025-10-09)\n  https://seekingalpha.com/article/4828954-tesla-great-company-wrong-price\n- SA analyst upgrades/downgrades: META, AMD, TSLA, DLTR (Seeking Alpha, 2025-10-09)\n  https://seekingalpha.com/news/4503084-sa-analyst-upgradesdowngrades-meta-amd-tsla-dltr\n- Tesla Stock Is Trading Lower Thursday: What's Driving The Action? (Benzinga, 2025-10-09)\n  https://www.benzinga.com/trading-ideas/movers/25/10/48129383/tesla-stock-is-trading-lower-thursday-whats-driving-the-action\n\n--- Market Context ---\nTSLA current price: $413.49, change: -5.06%.\n\nNow synthesize both to describe overall sentiment and reasoning.", additional_kwargs={}, response_metadata={}), AIMessage(content='The recent news surrounding Tesla (TSLA) presents a mixed sentiment in the market. On one hand, there are exciting developments, such as the introduction of Tesla\'s \'Model 2,\' which analysts speculate could have significant implications for the company\'s upcoming earnings report. This new model suggests Tesla is continuing to innovate and expand its product line, which is generally viewed positively by investors.\n\nHowever, there\'s also a hint of caution reflected in the stock\'s current price. As of the latest reports, TSLA is trading at $413.49, showing a decrease of 5.06%. This decline could be attributed to various factors influencing investor sentiment, including recent analyst ratings that suggest some believe the stock might not be priced appropriately given the company\'s fundamentals. For instance, one article titled "Tesla: Great Company; Wrong Price" indicates that despite Tesla\'s strong market position and innovative capabilities, there might be concerns about its current valuation.\n\nFurthermore, there are notable updates from veteran analysts who have set ambitious price targets, which could indicate bullish sentiment among some experts. However, the overall market action, including the stock\'s drop, suggests that investors might be weighing potential risks against the company\'s growth prospects.\n\nIn summary, while there are positive developments and analysts with optimistic views on Tesla\'s future, the current decline in stock price and mixed analyst ratings hint at a cautious sentiment in the market. Investors appear to be balancing excitement over new products with concerns about valuation and market dynamics.', additional_kwargs={}, response_metadata={})], 'response': 'The recent news surrounding Tesla (TSLA) presents a mixed sentiment in the market. On one hand, there are exciting developments, such as the introduction of Tesla\'s \'Model 2,\' which analysts speculate could have significant implications for the company\'s upcoming earnings report. This new model suggests Tesla is continuing to innovate and expand its product line, which is generally viewed positively by investors.\n\nHowever, there\'s also a hint of caution reflected in the stock\'s current price. As of the latest reports, TSLA is trading at $413.49, showing a decrease of 5.06%. This decline could be attributed to various factors influencing investor sentiment, including recent analyst ratings that suggest some believe the stock might not be priced appropriately given the company\'s fundamentals. For instance, one article titled "Tesla: Great Company; Wrong Price" indicates that despite Tesla\'s strong market position and innovative capabilities, there might be concerns about its current valuation.\n\nFurthermore, there are notable updates from veteran analysts who have set ambitious price targets, which could indicate bullish sentiment among some experts. However, the overall market action, including the stock\'s drop, suggests that investors might be weighing potential risks against the company\'s growth prospects.\n\nIn summary, while there are positive developments and analysts with optimistic views on Tesla\'s future, the current decline in stock price and mixed analyst ratings hint at a cautious sentiment in the market. Investors appear to be balancing excitement over new products with concerns about valuation and market dynamics.'}
