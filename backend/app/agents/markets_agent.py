@@ -17,7 +17,7 @@ class MarketsAgent(BaseAgent):
                 and almost like a knowledgeable fun big brother."""  # noqa E501
         )
         self.description_msg = """
-            - If the user input contains keywords related to financial markets, stocks, investing. Or even an actual stock ticker return:
+            - If and ONLY IF the user asks about a stock price call MARKETS. If they want anything else related to a company, and or If they want news sentiment or to know what is going on the the company, call NEWS. But if not return:
             {"type": "MARKETS", "answer": "<the stock ticker belonging to the stock from user input>"}
         """  # noqa E501
 

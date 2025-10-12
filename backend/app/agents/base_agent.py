@@ -2,7 +2,7 @@
 Base AI agent: all agents should be able to respond to these "public" methods.
 """
 class BaseAgent:
-    def handle_request(self, input_text: str) -> str:
+    def handle_request(self, *args, **kwargs) -> str:
         """
         Given some input_text return an LLM response
         """
