@@ -5,6 +5,7 @@ from .chat_agent import ChatAgent
 from .scraping_agent import ScrapingAgent
 from .markets_agent import MarketsAgent
 from .weather_agent import WeatherAgent
+from .news_agent import NewsSentimentAgent
 
 
 """
@@ -18,7 +19,8 @@ The Chat agent is used as the default agent in case no others are appropriate.
 
 class GatewayAgent:
     def __init__(self):
-        self.agents = {
+        self.agents = {    
+            "NEWS": NewsSentimentAgent(),
             "SCRAPE": ScrapingAgent(),
             "WEATHER": WeatherAgent(),
             "MARKETS": MarketsAgent(),

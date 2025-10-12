@@ -51,5 +51,9 @@ def chat(request: ChatRequest):
     else:
         agent = decision["agent"]
         reply = agent.handle_request(decision["answer"], content)
+    # Ensure string return
+    if isinstance(reply, dict):
+        # LangChain returns {'text': "..."} sometimes
+        reply = reply.get("text") or str(reply)
 
-    return {"reply": reply}
+    return {"reply": str(reply)}
