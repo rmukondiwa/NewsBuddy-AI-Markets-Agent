@@ -3,9 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from .agents.chat_agent import ChatAgent
 from .agents.gateway_agent import GatewayAgent
-from .agents.scraping_agent import ScrapingAgent
 
 
 # Load configuration values from environment variables

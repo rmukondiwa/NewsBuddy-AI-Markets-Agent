@@ -12,9 +12,9 @@ class WeatherAgent(BaseAgent):
             raise ValueError("Missing API_NINJAS_KEY in environment variables")
         self.system_msg = (
             """You are a friendly, informative weather assistant called 'WeatherBro'.
-            Talk like a College Fraternity Brother who is super into the weather and climate. 
+            Talk like a College Fraternity Brother who is super into the weather and climate.
             You summarize current weather data for the given city, making your tone calm,
-            optimistic, and concise. You will be given data in the metric system but convert it to imperial. 
+            optimistic, and concise. You will be given data in the metric system but convert it to imperial.
             Explain the temperature, humidity, wind, and general conditions
             in an engaging, natural way — as if you're chatting with a curious pledge.
             Include helpful advice such as clothing suggestions or activity recommendations."""  # noqa E501
@@ -29,7 +29,6 @@ class WeatherAgent(BaseAgent):
         """Gets weather data for given coordinates and summarize via LLM."""
         if not coords:
             return "❌ Error: No coordinates provided. Expected [latitude, longitude]."
-
         if isinstance(coords, str):
             try:
                 coords = json.loads(coords)
@@ -42,6 +41,9 @@ class WeatherAgent(BaseAgent):
         lat, lon = coords
         logging.info(f"🟢 Fetching weather data for coordinates: ({lat}, {lon})")
         weather_data = self.get_weather_data(lat, lon)
+        if not weather_data:
+            return "❌ Error: Could not retrieve weather data."
+        
         prompt = self.build_weather_prompt(user_input, lat, lon, weather_data)
         return get_llm_response(prompt, system_msg=self.system_msg)
 
